@@ -23,7 +23,7 @@ class Book(Base):
     publisher = relationship(Publisher, backref="books")
     # def __str__(self):
     #     tabulation = ' '*(39 - len(self.title))
-    #     return (f'|{self.title}{tabulation}|')
+    #     return (f'{self.title}{tabulation}|')
 
 
 class Shop(Base):
@@ -49,3 +49,4 @@ class Sale(Base):
     count = sq.Column(sq.Integer)
     id_stock = sq.Column(sq.Integer, sq.ForeignKey("stock.id"), nullable=False)
     stock = relationship(Stock, backref="sales")
+

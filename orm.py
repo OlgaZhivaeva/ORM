@@ -28,16 +28,21 @@ if __name__ == '__main__':
         }[record.get('model')]
         session.add(model(id=record.get('pk'), **record.get('fields')))
     session.commit()
+    def tabulation(name, number):
+        return ' '*(number - len(name))
+
 
     while True:
-        publisher_id = input('Введите идентификатор издателя или 0 для выхода ')
+        publisher_id = int(input('Введите идентификатор издателя или 0 для выхода '))
         if publisher_id != 0:
             subq = session.query(Book.title, Shop.name, Stock.id).join(Stock.book).join(Stock.shop).filter(Book.id_publisher == publisher_id).subquery()
-            result = session.query(subq.c.title, subq.c.name, Sale.price, Sale.date_sale).join(subq, Sale.id_stock == subq.c.id).all()
-            for res in result:
-                print(f'res')
+            for result in session.query(subq.c.title, subq.c.name, Sale.price, Sale.date_sale).join(subq, Sale.id_stock == subq.c.id).all():
+                print(f'{result[0]}', tabulation(result[0], 39), end='| ')
+                print(f'{result[1]}', tabulation(result[1], 8), end='| ')
+                print(result[2], result[3], sep=' | ')
         else: break
-        break
+
+
 
 
 
