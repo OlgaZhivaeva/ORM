@@ -29,14 +29,11 @@ if __name__ == '__main__':
         session.add(model(id=record.get('pk'), **record.get('fields')))
     session.commit()
 
-    publisher_id = input('Введите идентификфтор издателя ')
-    result = session.query(Book.title, Shop.name).join(Stock.book).join(Stock.shop).filter(Book.id_publisher == Publisher.id).all()
-
-
-
-
-
-
+    publisher_id = 1
+    subq = session.query(Book.title, Shop.name, Stock.id).join(Stock.book).join(Stock.shop).filter(Book.id_publisher == publisher_id).subquery()
+    result = session.query(subq.c.title, subq.c.name, Sale.price, Sale.date_sale).join(subq, Sale.id_stock == subq.c.id).all()
+    for res in result:
+        print(res)
 
 
 
