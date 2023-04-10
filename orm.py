@@ -36,7 +36,7 @@ if __name__ == '__main__':
     session.commit()
 
     def max_len(column):
-        """Функция определяуе максимальную длину строки в столбце"""
+        """Функция определяет максимальную длину строки в столбце"""
         rows = []
         for row in session.query(column).all():
             rows.append(row[0])
