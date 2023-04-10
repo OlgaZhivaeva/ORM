@@ -1,11 +1,17 @@
 import sqlalchemy as sq
 from sqlalchemy.orm import sessionmaker
 from models import drop_tables, create_tables, Publisher, Book, Shop, Stock, Sale
-from settings import driver, login, password, database
+import os
 import json
 
 
 if __name__ == '__main__':
+
+    driver = os.getenv('driver')
+    login = os.getenv('login')
+    password = os.getenv('password')
+    database = os.getenv('database')
+
     DSN = f"{driver}://{login}:{password}@localhost:5432/{database}"
     engine = sq.create_engine(DSN)
 
@@ -45,12 +51,6 @@ if __name__ == '__main__':
                 print(result[1], ' '*(max_len(Shop.name) - len(result[1])), end='| ')
                 print(result[2], result[3], sep=' | ')
         else: break
-
-
-
-
-
-
 
     session.close()
 
