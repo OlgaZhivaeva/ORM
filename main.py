@@ -2,7 +2,6 @@ from db_connection import *
 from db_adding import db_adding
 from models import drop_tables, create_tables, Publisher, Book, Shop, Stock, Sale
 
-
 drop_tables(engine)
 create_tables(engine)
 db_adding()
@@ -41,9 +40,6 @@ if __name__ == '__main__':
         if publisher in publishers_list():
             publisher_id = str(get_publisher_id(publisher))
             data_selecting(publisher_id)
-
-
-
 
 session.close()
 
